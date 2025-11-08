@@ -61,7 +61,7 @@ const WeeklyTracker = () => {
           </tr>
         ))}
         <tr>
-          <td colSpan={9} className='pt-2'>
+          <td colSpan={6} className='pt-2'>
             <div className='flex'>
               <ButtonPlus onClick={add} />
             </div>
