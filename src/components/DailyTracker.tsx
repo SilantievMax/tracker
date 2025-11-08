@@ -1,21 +1,36 @@
-import { MONTH_WEEKS } from '@/constants/common'
-import { useMoneyboxStore } from '@/stores/moneybox'
+import { WEEK_DAYS } from '@/constants/common'
+import { cn } from '@/lib/utils'
 import { Eraser } from 'lucide-react'
+import { useMemo } from 'react'
+import { useTaskStore } from '../stores/task'
 import ButtonPlus from './ButtonPlus'
 import { DayIndicator, type DayIndicatorType } from './DayIndicator'
 import TextInput from './TextInput'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 
-const WeeklyTracker = () => {
-  const { tasks, add, remove, updateTitle, updateDay } = useMoneyboxStore()
+export const DailyTracker = () => {
+  const { tasks, add, remove, updateTitle, updateDay } = useTaskStore()
+
+  const todayDayIndex = useMemo(() => {
+    const day = new Date().getDay()
+    return day === 0 ? 6 : day - 1
+  }, [])
+
+  const sortedTasks = useMemo(() => {
+    return [...tasks].sort((a, b) => {
+      const aIsActive = a.types[todayDayIndex] === 'active'
+      const bIsActive = b.types[todayDayIndex] === 'active'
+      return Number(bIsActive) - Number(aIsActive)
+    })
+  }, [tasks, todayDayIndex])
 
   return (
     <table>
       <thead className='font-mono font-normal'>
         <tr>
-          {MONTH_WEEKS.map((day) => (
+          {WEEK_DAYS.map((day, index) => (
             <th key={day}>
-              <div className='flex h-8 w-8 items-center justify-center'>{day}</div>
+              <div className={cn('flex h-8 w-8 items-center justify-center', { 'rounded border border-green-300': index === todayDayIndex })}>{day}</div>
             </th>
           ))}
           <th>
@@ -31,7 +46,7 @@ const WeeklyTracker = () => {
       </thead>
 
       <tbody>
-        {tasks.map((task) => (
+        {sortedTasks.map((task) => (
           <tr key={task.id} className='group hover:bg-gray-50'>
             {task.types.map((type, dayIndex) => (
               <td key={dayIndex} className='text-center'>
@@ -42,7 +57,7 @@ const WeeklyTracker = () => {
                     </div>
                   </PopoverTrigger>
                   <PopoverContent className='flex w-fit items-center gap-1 p-1'>
-                    {(['empty', 'filled', 'cross'].filter((i) => i !== task.types[dayIndex]) as DayIndicatorType[]).map((i) => (
+                    {(['empty', 'active', 'filled', 'half', 'cross', 'arrow'].filter((i) => i !== task.types[dayIndex]) as DayIndicatorType[]).map((i) => (
                       <DayIndicator key={i} type={i} onClick={() => updateDay(task.id, dayIndex, i)} />
                     ))}
                   </PopoverContent>
@@ -51,7 +66,7 @@ const WeeklyTracker = () => {
             ))}
             <td />
             <td>
-              <TextInput className='w-50' defaultValue={task.title} onBlur={(e) => updateTitle(task.id, e.target.value)} />
+              <TextInput defaultValue={task.title} onBlur={(e) => updateTitle(task.id, e.target.value)} />
             </td>
             <td className='opacity-0 transition-opacity duration-200 group-hover:opacity-30 hover:opacity-100'>
               <button className='flex h-6 w-6 cursor-pointer items-center justify-center text-red-400' onClick={() => remove(task.id)}>
@@ -71,5 +86,3 @@ const WeeklyTracker = () => {
     </table>
   )
 }
-
-export default WeeklyTracker

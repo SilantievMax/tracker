@@ -27,17 +27,16 @@ export const DayIndicator: React.FC<DayIndicatorProps> = ({ type, onClick }) => 
   return (
     <div
       onClick={onClick}
-      className={cn('flex h-6 w-6 cursor-pointer items-center justify-center rounded opacity-70 hover:opacity-100', {
+      className={cn('flex h-6 w-6 cursor-pointer items-center justify-center overflow-hidden rounded opacity-70 hover:opacity-100', {
         'border border-dashed border-gray-300': type === 'empty',
         'bg-gray-300': type === 'active',
         'bg-green-500': type === 'filled',
-        'overflow-hidden': type === 'half',
         'border border-red-200 text-red-500': type === 'cross',
         'border border-yellow-200 text-yellow-500': type === 'arrow',
       })}
     >
       {type === 'half' && (
-        <div className='flex h-full w-full'>
+        <div className='flex h-full w-full rotate-45 scale-200'>
           <div className='h-full w-1/2 bg-green-500' />
           <div className='h-full w-1/2 bg-green-100' />
         </div>

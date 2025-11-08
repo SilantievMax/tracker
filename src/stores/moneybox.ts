@@ -1,16 +1,16 @@
-import { TASK_STORAGE_KEY } from '@/constants/common'
+import { MONEYBOX_STORAGE_KEY } from '@/constants/common'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { DayIndicatorType } from '../components/DayIndicator'
 
-interface Task {
+interface Moneybox {
   id: string
   title: string
   types: DayIndicatorType[]
 }
 
-interface TaskStore {
-  tasks: Task[]
+interface MoneyboxStore {
+  tasks: Moneybox[]
 
   add: () => void
   updateTitle: (id: string, title: string) => void
@@ -18,10 +18,10 @@ interface TaskStore {
   remove: (id: string) => void
 }
 
-const createEmptyWeek = (): DayIndicatorType[] => Array.from({ length: 7 }, () => 'empty' as DayIndicatorType)
-const initialTasks: Task[] = [{ id: crypto.randomUUID(), title: 'Твоя первая задача', types: createEmptyWeek() }]
+const createEmptyWeek = (): DayIndicatorType[] => Array.from({ length: 4 }, () => 'empty' as DayIndicatorType)
+const initialTasks: Moneybox[] = [{ id: crypto.randomUUID(), title: 'Твоя первая задача', types: createEmptyWeek() }]
 
-export const useTaskStore = create<TaskStore>()(
+export const useMoneyboxStore = create<MoneyboxStore>()(
   persist(
     (set) => ({
       tasks: initialTasks,
@@ -54,7 +54,7 @@ export const useTaskStore = create<TaskStore>()(
         })),
     }),
     {
-      name: TASK_STORAGE_KEY,
+      name: MONEYBOX_STORAGE_KEY,
       version: 1,
     }
   )

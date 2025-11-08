@@ -123,4 +123,8 @@
   .shadow-sharp {
     box-shadow: 8px 8px 0px 0px rgba(0, 0, 0, 0.6);
   }
+
+  .shadow-sharp-sx {
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.6);
+  }
 }
