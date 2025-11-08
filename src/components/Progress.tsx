@@ -1,5 +1,4 @@
-import { launchFullScreenConfetti } from '@/lib/launchFullScreenConfetti'
-import { useEffect, type FC } from 'react'
+import { type FC } from 'react'
 
 interface ProgressProps {
   title: string
@@ -8,15 +7,9 @@ interface ProgressProps {
 }
 
 const Progress: FC<ProgressProps> = ({ className, title, progress = 0 }) => {
-  useEffect(() => {
-    if (progress === 100) {
-      launchFullScreenConfetti(3000)
-    }
-  }, [progress])
-
   return (
     <div className={className}>
-      <h2 className='font-mono font-bold'>{title}</h2>
+      <h2 className='font-mono font-bold text-nowrap'>{title}</h2>
       <div className='shadow-sharp-sx relative h-4 w-full overflow-hidden rounded-2xl border border-black'>
         <div style={{ width: `${progress}%` }} className='h-full bg-green-400' />
       </div>

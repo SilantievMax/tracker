@@ -36,7 +36,7 @@ export const DailyTracker = () => {
           <th>
             <div className='h-4 w-4' />
           </th>
-          <th>
+          <th className='w-full'>
             <div className='flex items-center justify-center'>задачи</div>
           </th>
           <th>

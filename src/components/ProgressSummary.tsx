@@ -22,7 +22,7 @@ const ProgressSummary = () => {
   }
 
   return (
-    <div className='ml-20 flex w-full items-center gap-4'>
+    <div className='flex w-full items-center gap-4'>
       <Progress className='grow' title='Я сделал(а) %' progress={calculateFilledNotEmptyPercentage(tasks)} />
       <Progress className='grow' title='Я накопил(а) %' progress={calculateFilledPercentage(tasksMoneybox)} />
     </div>

@@ -21,7 +21,7 @@ const WeeklyTracker = () => {
           <th>
             <div className='h-4 w-4' />
           </th>
-          <th>
+          <th className='w-full'>
             <div className='flex items-center justify-center'>задачи</div>
           </th>
           <th>
@@ -51,7 +51,7 @@ const WeeklyTracker = () => {
             ))}
             <td />
             <td>
-              <TextInput className='w-50' defaultValue={task.title} onBlur={(e) => updateTitle(task.id, e.target.value)} />
+              <TextInput defaultValue={task.title} onBlur={(e) => updateTitle(task.id, e.target.value)} />
             </td>
             <td className='opacity-0 transition-opacity duration-200 group-hover:opacity-30 hover:opacity-100'>
               <button className='flex h-6 w-6 cursor-pointer items-center justify-center text-red-400' onClick={() => remove(task.id)}>
