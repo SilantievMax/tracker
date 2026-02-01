@@ -18,7 +18,7 @@ export const DailyTracker = () => {
 
   const sortedTasks = useMemo(() => {
     return [...tasks].sort((a, b) => {
-      const aIsActive = a.types[todayDayIndex] === 'active'
+      const aIsActive = a.types[todayDayIndex] === 'active' || a.types[todayDayIndex] === 'half'
       const bIsActive = b.types[todayDayIndex] === 'active'
       return Number(bIsActive) - Number(aIsActive)
     })

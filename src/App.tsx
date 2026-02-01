@@ -10,14 +10,18 @@ const App = () => {
         <ProgressSummary />
       </header>
 
-      <div className='mt-5 flex flex-wrap justify-center gap-6'>
+      <div className='flex flex-col gap-6 pt-10'>
+        <WrappingCard title='Еженедельные пополнения' className='grow'>
+          <WeeklyTracker />
+        </WrappingCard>
+
         <WrappingCard title='Ежедневные задачи на неделю' className='grow-4'>
           <DailyTracker />
         </WrappingCard>
 
-        <WrappingCard title='Еженедельные пополнения' className='grow'>
-          <WeeklyTracker />
-        </WrappingCard>
+        {/* <WrappingCard title='Заметки'>
+          <Notepad />
+        </WrappingCard> */}
       </div>
     </main>
   )
