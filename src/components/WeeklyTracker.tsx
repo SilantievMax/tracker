@@ -1,7 +1,8 @@
 import { MAX_COUNT_WEEKS, MONTH_WEEKS } from '@/constants/common'
+import { cn } from '@/lib/utils'
 import { useMoneyboxStore } from '@/stores/moneybox'
 import { Eraser } from 'lucide-react'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import ButtonPlus from './ButtonPlus'
 import { DayIndicator, type DayIndicatorType } from './DayIndicator'
 import TextInput from './TextInput'
@@ -9,6 +10,15 @@ import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 
 const WeeklyTracker = () => {
   const { tasks, add, remove, updateTitle, updateDay, updateCountWeeks } = useMoneyboxStore()
+
+  const todayWeekIndex = useMemo(() => {
+    const d = new Date()
+    d.setHours(0, 0, 0, 0)
+    d.setDate(d.getDate() + 4 - (d.getDay() || 7))
+    const yearStart = new Date(d.getFullYear(), 0, 1)
+    const weekNo = Math.ceil(((+d - +yearStart) / 86400000 + 1) / 7)
+    return weekNo - 1
+  }, [])
 
   useEffect(() => {
     tasks.forEach((task) => {
@@ -23,9 +33,9 @@ const WeeklyTracker = () => {
       <table>
         <thead className='font-mono font-normal'>
           <tr>
-            {MONTH_WEEKS.map((day) => (
+            {MONTH_WEEKS.map((day, index) => (
               <th key={day}>
-                <div className='flex h-8 w-8 items-center justify-center'>{day}</div>
+                <div className={cn('flex h-8 w-8 items-center justify-center', { 'rounded border border-green-300': index === todayWeekIndex })}>{day}</div>
               </th>
             ))}
             <th>
